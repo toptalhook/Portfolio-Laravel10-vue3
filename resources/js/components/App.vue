@@ -1,5 +1,5 @@
 <template>
-  First component in our laravel vuejs website portfolio
+ <router-view></router-view>
 </template>
 
 <script>
