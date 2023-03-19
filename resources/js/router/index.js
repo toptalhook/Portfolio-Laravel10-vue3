@@ -12,23 +12,39 @@ const routes = [
     //admin
     {
         path: '/admin/home',
+        name: 'adminHome',
         component: homeAdminIndex,
+        meta:{
+            isAuth :true
+        }
     },
     // pages
     {
         path: '/',
-        component: homePageIndex
+        name: 'home',
+        component: homePageIndex,
+        meta:{
+            isAuth :false
+        }
     },
 
     //login
     {
         path: '/login',
-        component: login
+        name: 'login',
+        component: login,
+        meta:{
+            isAuth :false
+        }
     },
 
     //notFound
     {
-        path: '/:pathMath(.*)*'
+        path: '/:pathMath(.*)*',
+        name: 'notFound',
+        meta:{
+            isAuth :false
+        }
     }
 ]
 
@@ -36,6 +52,14 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
      routes
+})
+router.beforeEach((to,from)=>{
+if (to.meta.isAuth && !localStorage.getItem('token')){
+    return { name : 'login' }
+}
+    if (to.meta.isAuth === false && localStorage.getItem('token')){
+        return { name : 'adminHome' }
+    }
 })
 
 export default router

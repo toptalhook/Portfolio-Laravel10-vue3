@@ -1,8 +1,9 @@
 <template>
     <div class="login">
         <div class="formLogin">
+            <p class="text-danger" v-if="error">{{error}}</p>
             <form @submit.prevent="login">
-                <input type="email" placeholder="Enter your email" v-model="form.email">
+                <input type="email" placeholder="Enter your email" v-model="form.email"  >
                 <br>
                 <input type="password" placeholder="Enter your password" v-model="form.password">
                 <br>
@@ -16,7 +17,7 @@
 <script>
 import {reactive, ref} from "vue";
 import Axios, {baseUrl} from "../axios";
-
+import {useRouter} from 'vue-router'
 export default {
     name: "login",
     data: () => ({}),
@@ -28,11 +29,13 @@ export default {
             password: ''
         });
         let error = ref()
+        const router = useRouter()
         const login = async () => {
             await Axios.get(`${baseUrl}csrf-cookie`).then(res => {
                 return Axios.post(`login`, form).then(res => {
                     if (res.data.success){
                         localStorage.setItem('token',res.data.data.token)
+                        router.push('/admin/home')
                     }else {
                        error.value =res.data.message
                     }
@@ -116,5 +119,8 @@ input:focus {
 .submit:focus {
     background: #308099;
     color: #ffffff;
+}
+.text-danger{
+    color: red;
 }
 </style>

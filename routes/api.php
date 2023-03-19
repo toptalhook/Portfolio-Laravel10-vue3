@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AboutController;
 use App\Http\Controllers\Api\V1\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,3 +24,5 @@ Route::prefix('v1')->group(function (){
     Route::post('register',[AuthController::class , 'register'])->name('register');
     Route::post('login',[AuthController::class , 'login'])->name('login');
 });
+
+Route::get('edit-about',[AboutController::class,'edit_about']);
