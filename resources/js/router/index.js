@@ -2,20 +2,30 @@ import {createRouter, createWebHistory} from "vue-router";
 
 // admin
 import homeAdminIndex from '../components/admin/home/index.vue'
+import adminAboutIndex from '../components/admin/about/index.vue'
 
 //pages
-import  homePageIndex from '../components/pages/home/index.vue'
+import homePageIndex from '../components/pages/home/index.vue'
 
 // login
 import login from '../components/auth/login.vue'
+
 const routes = [
     //admin
     {
         path: '/admin/home',
         name: 'adminHome',
         component: homeAdminIndex,
-        meta:{
-            isAuth :true
+        meta: {
+            isAuth: true
+        }
+    },
+    {
+        path: '/admin/about',
+        name: 'adminAbout',
+        component: adminAboutIndex,
+        meta: {
+            isAuth: true
         }
     },
     // pages
@@ -23,8 +33,8 @@ const routes = [
         path: '/',
         name: 'home',
         component: homePageIndex,
-        meta:{
-            isAuth :false
+        meta: {
+            isAuth: false
         }
     },
 
@@ -33,8 +43,8 @@ const routes = [
         path: '/login',
         name: 'login',
         component: login,
-        meta:{
-            isAuth :false
+        meta: {
+            isAuth: false
         }
     },
 
@@ -42,8 +52,8 @@ const routes = [
     {
         path: '/:pathMath(.*)*',
         name: 'notFound',
-        meta:{
-            isAuth :false
+        meta: {
+            isAuth: false
         }
     }
 ]
@@ -51,14 +61,14 @@ const routes = [
 
 const router = createRouter({
     history: createWebHistory(),
-     routes
+    routes
 })
-router.beforeEach((to,from)=>{
-if (to.meta.isAuth && !localStorage.getItem('token')){
-    return { name : 'login' }
-}
-    if (to.meta.isAuth === false && localStorage.getItem('token')){
-        return { name : 'adminHome' }
+router.beforeEach((to, from) => {
+    if (to.meta.isAuth && !localStorage.getItem('token')) {
+        return {name: 'login'}
+    }
+    if (to.meta.isAuth === false && localStorage.getItem('token')) {
+        return {name: 'adminHome'}
     }
 })
 
