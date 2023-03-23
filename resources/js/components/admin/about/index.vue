@@ -12,7 +12,7 @@
                 <div class="about_container">
                     <div class="titlebar">
                         <div class="titlebar_item">
-                            <h1>About Us</h1>
+                            <h1>About Me</h1>
                         </div>
                         <div class="titlebar_item">
                             <div class="btn btn-secondary" @click.prevent="updateAbout">

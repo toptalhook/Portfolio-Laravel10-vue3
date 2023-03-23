@@ -27,7 +27,7 @@ class AboutController extends Controller
             $ex = explode('/',$sub)[1];
             $name =time().".".$ex;
             $upload_path = public_path(). "/img/upload/";
-            $img = Image::make($request->photo)->resize(500);
+            $img = Image::make($request->photo)->resize(700,500);
             $image =$upload_path.$about->photo;
             $img->save($upload_path.$name);
             if (file_exists($image)){
@@ -44,7 +44,7 @@ class AboutController extends Controller
             $sub= substr($request->cv,0,$strpos);
             $ex = explode('/',$sub)[1];
             $nameCv =time().".".$ex;
-            $img = Image::make($request->cv)->resize(500);
+            $img = Image::make($request->cv)->resize(700,500);
             $upload_path = public_path(). "/img/upload/";
             $image =$upload_path.$about->cv;
             $img->save($upload_path.$nameCv);

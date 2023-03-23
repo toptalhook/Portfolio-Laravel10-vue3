@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AboutController;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\ServiceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,11 +22,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function (){
+    //auth
     Route::post('register',[AuthController::class , 'register'])->name('register');
     Route::post('login',[AuthController::class , 'login'])->name('login');
 
+    // About
     Route::get('/edit-about',[AboutController::class,'edit_about']);
     Route::post('/update-about/{id}',[AboutController::class,'update_about']);
+
+    //service
+    Route::get('get-all-services' , [ServiceController::class , 'get_all_services']);
+    Route::post('create-service' , [ServiceController::class , 'create_service']);
 });
 
 
