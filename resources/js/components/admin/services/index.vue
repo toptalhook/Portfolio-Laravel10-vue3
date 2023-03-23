@@ -63,10 +63,10 @@
                             </button>
                             <p>{{ item.description }}</p>
                             <div>
-                                <button class="btn-icon success">
+                                <button class="btn-icon success" @click="editModal(item)">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button class="btn-icon danger">
+                                <button class="btn-icon danger" @click="deleteService(item.id)">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -78,10 +78,11 @@
                 <div class="modal main__modal " :class="{show : showModal}">
                     <div class="modal__content">
                         <span class="modal__close btn__close--modal" @click="closeModal()">×</span>
-                        <h3 class="modal__title">Add Service</h3>
+                        <h3 class="modal__title" v-show="editMode === false">Add Service</h3>
+                        <h3 class="modal__title" v-show="editMode === true">update Service</h3>
                         <hr class="modal_line">
                         <br>
-                        <form @submit.prevent="createService()">
+                        <form @submit.prevent="editMode === false  ? createService() : updateService()">
                             <div>
 
                                 <p>Service Name</p>
@@ -96,14 +97,17 @@
 
                             </div>
 
-                        <br>
-                        <hr class="modal_line">
-                        <div class="model__footer">
-                            <button class="btn mr-2 btn__close--modal" @click="closeModal()">
-                                Cancel
-                            </button>
-                            <button class="btn btn-secondary btn__close--modal ">Save</button>
-                        </div>
+                            <br>
+                            <hr class="modal_line">
+                            <div class="model__footer">
+                                <button class="btn mr-2 btn__close--modal" @click="closeModal()">
+                                    Cancel
+                                </button>
+                                <button class="btn btn-secondary btn__close--modal " v-show="editMode ===false">Save
+                                </button>
+                                <button class="btn btn-secondary btn__close--modal " v-show="editMode ===true">Update
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -127,6 +131,7 @@ export default {
 
         const showModal = ref(false)
         const hideModal = ref(true)
+        const editMode = ref(false)
         let form = ref({
             name: '',
             icon: '',
@@ -140,21 +145,65 @@ export default {
         }
 
         const openModal = () => {
+            editMode.value = false
             showModal.value = !showModal.value
         }
         const closeModal = () => {
             showModal.value = !hideModal.value
+            form.value = ({})
         }
 
         const createService = async () => {
             await Axios.post('create-service', form.value).then(res => {
-               getServices()
+                getServices()
                 closeModal()
                 toast.fire({
-                    icon : 'success',
-                    title : 'Service add successfully'
+                    icon: 'success',
+                    title: 'Service add successfully'
                 })
             })
+        }
+
+        const editModal = (service) => {
+            editMode.value = true
+            showModal.value = !showModal.value
+            form.value = service
+        }
+
+        const updateService = async () => {
+            await Axios.post('update-service/' + form.value.id, form.value)
+                .then(res => {
+                    getServices()
+                    closeModal()
+                    toast.fire({
+                        icon: "success",
+                        title: "Service updated successfully"
+                    })
+                })
+        }
+
+        const deleteService = (id) => {
+            Swal.fire({
+                title: 'Are you sure to delete?',
+                text: "you can't go back",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it !'
+            })
+                .then((result) => {
+                    if (result.value) {
+                      Axios.get('delete-service/' +id).then(()=>{
+                          Swal.fire({
+                              icon : "success",
+                              title : "Deleted",
+                              text : "Service deleted successfully"
+                          })
+                          getServices()
+                      })
+                    }
+                })
         }
         onMounted(async () => {
             getServices()
@@ -165,8 +214,12 @@ export default {
             openModal,
             closeModal,
             createService,
+            editModal,
+            updateService,
+            deleteService,
             showModal,
-            form
+            form,
+            editMode
         }
     }
 }

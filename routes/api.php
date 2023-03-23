@@ -33,6 +33,8 @@ Route::prefix('v1')->group(function (){
     //service
     Route::get('get-all-services' , [ServiceController::class , 'get_all_services']);
     Route::post('create-service' , [ServiceController::class , 'create_service']);
+    Route::post('update-service/{id}' , [ServiceController::class , 'update_service']);
+    Route::get('delete-service/{id}' , [ServiceController::class , 'delete_service']);
 });
 
 
