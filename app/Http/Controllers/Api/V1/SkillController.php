@@ -15,4 +15,13 @@ class SkillController extends Controller
             'skills' =>$skills
         ]);
     }
+
+    public function create_skill(Request $request)
+    {
+        $skill = new Skill();
+        $skill->name = $request->name;
+        $skill->proficiency = $request->proficiency;
+        $skill->service_id = $request->service_id;
+        $skill->save();
+    }
 }
