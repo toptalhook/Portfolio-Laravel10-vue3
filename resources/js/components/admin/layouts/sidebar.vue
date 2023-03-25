@@ -37,14 +37,14 @@
                     </router-link>
                 </li>
                 <li class="nav_item">
-                    <a class="nav_link " href="skill.html">
+                    <router-link class="nav_link " to="/admin/skills">
                             <span class="nav_link--span--icon">
                                <i class="fas fa-clipboard-list nav__link--icon"></i>
                             </span>
                         <span class="nav_link--span--navname">
                                 Skills
                             </span>
-                    </a>
+                    </router-link>
                 </li>
                 <li class="nav_item">
                     <a class="nav_link " href="education.html">
@@ -59,7 +59,7 @@
                 <li class="nav_item">
                     <a class="nav_link " href="experience.html">
                             <span class="nav_link--span--icon">
-                                <i class="fas fa-home nav__link--icon"> </i>
+                                <i class="fas fa-briefcase nav__link--icon"></i>
                             </span>
                         <span class="nav_link--span--navname">
                                 Experiences
@@ -69,7 +69,7 @@
                 <li class="nav_item">
                     <a class="nav_link " href="project.html">
                             <span class="nav_link--span--icon">
-                                <i class="fas fa-home nav__link--icon"> </i>
+                                <i class="fas fa-project-diagram nav__link--icon"></i>
                             </span>
                         <span class="nav_link--span--navname">
                                 Projects
@@ -89,7 +89,7 @@
                 <li class="nav_item">
                     <a class="nav_link " href="#">
                             <span class="nav_link--span--icon">
-                                <i class="fas fa-home nav__link--icon"> </i>
+                               <i class="fas fa-comments nav__link--icon"></i>
                             </span>
                         <span class="nav_link--span--navname">
                                 Messages

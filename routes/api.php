@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\AboutController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\ServiceController;
+use App\Http\Controllers\Api\V1\SkillController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function (){
-    //auth
+    //Auth
     Route::post('register',[AuthController::class , 'register'])->name('register');
     Route::post('login',[AuthController::class , 'login'])->name('login');
 
@@ -30,11 +31,14 @@ Route::prefix('v1')->group(function (){
     Route::get('/edit-about',[AboutController::class,'edit_about']);
     Route::post('/update-about/{id}',[AboutController::class,'update_about']);
 
-    //service
+    //Service
     Route::get('get-all-services' , [ServiceController::class , 'get_all_services']);
     Route::post('create-service' , [ServiceController::class , 'create_service']);
     Route::post('update-service/{id}' , [ServiceController::class , 'update_service']);
     Route::get('delete-service/{id}' , [ServiceController::class , 'delete_service']);
+
+    // Skill
+    Route::get('get-all-skills',[SkillController::class , 'get_all_skills']);
 });
 
 
