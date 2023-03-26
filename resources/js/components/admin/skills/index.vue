@@ -65,10 +65,10 @@
                             </div>
                             <p v-if="item.service">{{ item.service.name }}</p>
                             <div>
-                                <button class="btn-icon success">
-                                    <i class="fas fa-pencil-alt"></i>
+                                <button class="btn-icon success" @click="editModal(item)">
+                                    <i class="fas fa-pencil-alt" ></i>
                                 </button>
-                                <button class="btn-icon danger">
+                                <button class="btn-icon danger" @click="deleteSkill(item.id)">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -81,10 +81,11 @@
                 <div class="modal main__modal " :class="{show : showModal}">
                     <div class="modal__content">
                         <span class="modal__close btn__close--modal" @click="closeModal()">×</span>
-                        <h3 class="modal__title">Add Skill</h3>
+                        <h3 class="modal__title" v-show="editMode === false">Add Skill</h3>
+                        <h3 class="modal__title" v-show="editMode === true">Update Skill</h3>
                         <hr class="modal_line">
                         <br>
-                        <form @submit.prevent="createSkill()">
+                        <form @submit.prevent="editMode ? updateSkill() : createSkill()">
                             <div>
                                 <p>Name</p>
                                 <input type="text" class="input" v-model="form.name"/>
@@ -106,7 +107,10 @@
                                 <button class="btn mr-2 btn__close--modal" @click="closeModal()">
                                     Cancel
                                 </button>
-                                <button class="btn btn-secondary btn__close--modal ">Save</button>
+                                <button class="btn btn-secondary btn__close--modal " v-show="editMode === false">Save
+                                </button>
+                                <button class="btn btn-secondary btn__close--modal " v-show="editMode === true">Update
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -129,12 +133,20 @@ export default {
 
         const showModal = ref(false)
         const hideModal = ref(true)
+        const editMode = ref(false)
 
         const openModal = () => {
             showModal.value = !showModal.value
         }
         const closeModal = () => {
             showModal.value = !hideModal.value
+            form.value = ({})
+            editMode.value = false
+        }
+        const editModal = (item) => {
+            editMode.value = true
+            showModal.value = !showModal.value
+            form.value = item
         }
 
         const form = ref({
@@ -154,14 +166,50 @@ export default {
             services.value = response.data.services
         }
 
-        const createSkill =async () => {
-                await Axios.post('create-skill',form.value).then(res => {
+        const createSkill = async () => {
+            await Axios.post('create-skill', form.value).then(res => {
+                getSkills()
+                closeModal()
+                toast.fire({
+                    icon: 'success',
+                    title: 'Skill add successfully'
+                })
+            })
+        }
+
+        const updateSkill = async () => {
+            await Axios.post('update-skill/' + form.value.id, form.value)
+                .then(() => {
                     getSkills()
                     closeModal()
                     toast.fire({
-                        icon: 'success',
-                        title: 'Skill add successfully'
+                        icon : 'success',
+                        title : 'Skill updated successfully'
                     })
+                })
+        }
+
+        const deleteSkill = (id) => {
+            Swal.fire({
+                title: 'Are you sure to delete?',
+                text: "you can't go back",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it !'
+            })
+                .then((result) => {
+                    if (result.value) {
+                        Axios.get('delete-skill/' +id).then(()=>{
+                            Swal.fire({
+                                icon : "success",
+                                title : "Deleted",
+                                text : "Skill deleted successfully"
+                            })
+                            getSkills()
+                        })
+                    }
                 })
         }
 
@@ -177,7 +225,11 @@ export default {
             openModal,
             closeModal,
             showModal,
-            createSkill
+            createSkill,
+            editModal,
+            editMode,
+            updateSkill,
+            deleteSkill
         }
     }
 

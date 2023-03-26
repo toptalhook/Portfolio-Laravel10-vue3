@@ -40,6 +40,8 @@ Route::prefix('v1')->group(function (){
     // Skill
     Route::get('get-all-skills',[SkillController::class , 'get_all_skills']);
     Route::post('create-skill', [SkillController::class , 'create_skill']);
+    Route::post('update-skill/{id}', [SkillController::class , 'update_skill']);
+    Route::get('delete-skill/{id}' , [SkillController::class , 'delete_skill']);
 });
 
 
