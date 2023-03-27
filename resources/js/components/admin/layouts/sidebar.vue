@@ -47,14 +47,14 @@
                     </router-link>
                 </li>
                 <li class="nav_item">
-                    <a class="nav_link " href="education.html">
+                    <router-link class="nav_link " to="/admin/educations">
                             <span class="nav_link--span--icon">
                                <i class="fas fa-graduation-cap nav__link--icon"></i>
                             </span>
                         <span class="nav_link--span--navname">
                                 Education
                             </span>
-                    </a>
+                    </router-link>
                 </li>
                 <li class="nav_item">
                     <a class="nav_link " href="experience.html">

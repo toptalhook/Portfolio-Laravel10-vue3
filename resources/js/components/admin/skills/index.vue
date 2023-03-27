@@ -94,7 +94,7 @@
                                 <input type="text" class="input" v-model="form.proficiency"/>
 
                                 <p>Service</p>
-                                <select class="inputSelect" name="" v-model="form.service_id">
+                                <select class="inputSelect"  v-model="form.service_id">
                                     <option disabled selected>Select service</option>
                                     <option :value="service.id" v-for="service in services" :key="service.id">
                                         {{ service.name }}

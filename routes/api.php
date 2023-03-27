@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AboutController;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\EducationController;
 use App\Http\Controllers\Api\V1\ServiceController;
 use App\Http\Controllers\Api\V1\SkillController;
 use Illuminate\Http\Request;
@@ -42,6 +43,9 @@ Route::prefix('v1')->group(function (){
     Route::post('create-skill', [SkillController::class , 'create_skill']);
     Route::post('update-skill/{id}', [SkillController::class , 'update_skill']);
     Route::get('delete-skill/{id}' , [SkillController::class , 'delete_skill']);
+
+    // Education
+    Route::get('get-all-educations',[EducationController::class , 'get_all_educations']);
 });
 
 

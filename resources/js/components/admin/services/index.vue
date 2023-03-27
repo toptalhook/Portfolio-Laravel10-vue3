@@ -138,11 +138,7 @@ export default {
             description: ''
         })
 
-        const getServices = async () => {
-            await Axios.get('get-all-services').then(res => {
-                services.value = res.data.services
-            })
-        }
+
 
         const openModal = () => {
             editMode.value = false
@@ -204,6 +200,12 @@ export default {
                       })
                     }
                 })
+        }
+
+        const getServices = async () => {
+            await Axios.get('get-all-services').then(res => {
+                services.value = res.data.services
+            })
         }
         onMounted(async () => {
             getServices()
