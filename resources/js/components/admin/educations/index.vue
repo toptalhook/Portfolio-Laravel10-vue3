@@ -64,10 +64,10 @@
                             <p>{{ item.degree }}</p>
                             <p>{{ item.department }}</p>
                             <div>
-                                <button class="btn-icon success">
+                                <button class="btn-icon success" @click="editModal(item)">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button class="btn-icon danger">
+                                <button class="btn-icon danger" @click="deleteEducation(item.id)">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -80,10 +80,11 @@
                 <div class="modal main__modal " :class="{show : showModal}">
                     <div class="modal__content">
                         <span class="modal__close btn__close--modal" @click="closeModal()">×</span>
-                        <h3 class="modal__title">Add Education</h3>
+                        <h3 class="modal__title" v-show="editMode ===false">Add Education</h3>
+                        <h3 class="modal__title" v-show="editMode ===true">Update Education</h3>
                         <hr class="modal_line">
                         <br>
-                        <form @submit.prevent="createEducation()">
+                        <form @submit.prevent="editMode ? updateEducation() : createEducation()">
                             <div>
                                 <p>Institution</p>
                                 <input type="text" class="input" v-model="form.institution"/>
@@ -104,7 +105,8 @@
                                 <button class="btn mr-2 btn__close--modal" @click="closeModal()">
                                     Cancel
                                 </button>
-                                <button class="btn btn-secondary btn__close--modal ">Save</button>
+                                <button class="btn btn-secondary btn__close--modal " v-show="editMode ===false">Save</button>
+                                <button class="btn btn-secondary btn__close--modal " v-show="editMode ===true">Update</button>
                             </div>
                         </form>
                     </div>
@@ -128,6 +130,7 @@ export default {
         let educations = ref([])
         const showModal = ref(false)
         const hideModal = ref(true)
+        const editMode = ref(false)
 
         let form = ref({
             institution: '',
@@ -136,10 +139,18 @@ export default {
             department: '',
         })
         const openModal = () => {
+            editMode.value = false
             showModal.value = !showModal.value
         }
         const closeModal = () => {
             showModal.value = !hideModal.value
+            form.value = ({})
+        }
+
+        const editModal = (education) => {
+          editMode.value=true
+            showModal.value = !showModal.value
+           form.value = education
         }
 
         const createEducation = async () => {
@@ -151,6 +162,40 @@ export default {
                     title: 'Education created successfully'
                 })
             })
+        }
+        const updateEducation = async () => {
+          await Axios.post('update-education/'+form.value.id , form.value).then(res=> {
+              getEducations()
+              closeModal()
+              toast.fire({
+                  icon: 'success',
+                  title: 'Education updated successfully'
+              })
+            })
+        }
+
+        const deleteEducation = (id) => {
+            Swal.fire({
+                title: 'Are you sure to delete?',
+                text: "you can't go back",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it !'
+            })
+                .then((result) => {
+                    if (result.value) {
+                        Axios.get('delete-education/' +id).then(()=>{
+                            Swal.fire({
+                                icon : "success",
+                                title : "Deleted",
+                                text : "Education deleted successfully"
+                            })
+                            getEducations()
+                        })
+                    }
+                })
         }
 
         const getEducations = async () => {
@@ -168,8 +213,12 @@ export default {
             openModal,
             closeModal,
             showModal,
+            editMode,
+            editModal,
             form,
-            createEducation
+            createEducation,
+            updateEducation,
+            deleteEducation
         }
     }
 }
