@@ -46,6 +46,7 @@ Route::prefix('v1')->group(function (){
 
     // Education
     Route::get('get-all-educations',[EducationController::class , 'get_all_educations']);
+    Route::post('create-education', [EducationController::class , 'create_education']);
 });
 
 

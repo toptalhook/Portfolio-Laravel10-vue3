@@ -14,7 +14,7 @@
                             <h1>Educations </h1>
                         </div>
                         <div class="titlebar_item">
-                            <div class="btn btn__open--modal">
+                            <div class="btn btn__open--modal" @click="openModal()">
                                 New Education
                             </div>
                         </div>
@@ -57,7 +57,8 @@
                             <p>Actions</p>
                         </div>
                         <!-- item 1 -->
-                        <div class="education_table-items" v-for="item in educations" :key="item.id" v-if="educations.length > 0">
+                        <div class="education_table-items" v-for="item in educations" :key="item.id"
+                             v-if="educations.length > 0">
                             <p>{{ item.institution }}</p>
                             <p>{{ item.period }}</p>
                             <p>{{ item.degree }}</p>
@@ -66,7 +67,7 @@
                                 <button class="btn-icon success">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button class="btn-icon danger" >
+                                <button class="btn-icon danger">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -76,32 +77,36 @@
 
                 </div>
                 <!-------------- EDUCATION MODAL --------------->
-                <div class="modal main__modal " >
+                <div class="modal main__modal " :class="{show : showModal}">
                     <div class="modal__content">
-                        <span class="modal__close btn__close--modal" >×</span>
+                        <span class="modal__close btn__close--modal" @click="closeModal()">×</span>
                         <h3 class="modal__title">Add Education</h3>
-                        <hr class="modal_line"><br>
-                        <div>
-                            <p>Institution</p>
-                            <input type="text" class="input" />
+                        <hr class="modal_line">
+                        <br>
+                        <form @submit.prevent="createEducation()">
+                            <div>
+                                <p>Institution</p>
+                                <input type="text" class="input" v-model="form.institution"/>
 
-                            <p>Period</p>
-                            <input type="text" class="input" />
+                                <p>Period</p>
+                                <input type="text" class="input" v-model="form.period"/>
 
-                            <p>Degree</p>
-                            <input type="text" class="input" />
+                                <p>Degree</p>
+                                <input type="text" class="input" v-model="form.degree"/>
 
-                            <p>Department</p>
-                            <input type="text" class="input" />
+                                <p>Department</p>
+                                <input type="text" class="input" v-model="form.department"/>
 
-                        </div>
-                        <br><hr class="modal_line">
-                        <div class="model__footer">
-                            <button class="btn mr-2 btn__close--modal" @click="closeModal()">
-                                Cancel
-                            </button>
-                            <button class="btn btn-secondary btn__close--modal ">Save</button>
-                        </div>
+                            </div>
+                            <br>
+                            <hr class="modal_line">
+                            <div class="model__footer">
+                                <button class="btn mr-2 btn__close--modal" @click="closeModal()">
+                                    Cancel
+                                </button>
+                                <button class="btn btn-secondary btn__close--modal ">Save</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </section>
@@ -113,26 +118,58 @@
 import Base from "../layouts/base.vue";
 import {onMounted, ref} from "vue";
 import Axios from "../../axios";
+
 export default {
     name: "index",
-    components:{Base},
+    components: {Base},
 
-    setup(){
+    setup() {
 
         let educations = ref([])
+        const showModal = ref(false)
+        const hideModal = ref(true)
 
-        const getEducations = async () => {
-          await Axios.get('get-all-educations').then(res => {
-              educations.value = res.data.educations
-          })
+        let form = ref({
+            institution: '',
+            period: '',
+            degree: '',
+            department: '',
+        })
+        const openModal = () => {
+            showModal.value = !showModal.value
+        }
+        const closeModal = () => {
+            showModal.value = !hideModal.value
         }
 
-        onMounted(async ()=>{
+        const createEducation = async () => {
+            await Axios.post('create-education', form.value).then(res => {
+                getEducations()
+                closeModal()
+                toast.fire({
+                    icon: 'success',
+                    title: 'Education created successfully'
+                })
+            })
+        }
+
+        const getEducations = async () => {
+            await Axios.get('get-all-educations').then(res => {
+                educations.value = res.data.educations
+            })
+        }
+
+        onMounted(async () => {
             getEducations()
         })
 
-        return{
+        return {
             educations,
+            openModal,
+            closeModal,
+            showModal,
+            form,
+            createEducation
         }
     }
 }
