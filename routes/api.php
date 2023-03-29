@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\AboutController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\EducationController;
+use App\Http\Controllers\Api\V1\ExperienceController;
 use App\Http\Controllers\Api\V1\ServiceController;
 use App\Http\Controllers\Api\V1\SkillController;
 use Illuminate\Http\Request;
@@ -49,6 +50,9 @@ Route::prefix('v1')->group(function (){
     Route::post('create-education', [EducationController::class , 'create_education']);
     Route::post('update-education/{id}', [EducationController::class , 'update_education']);
     Route::get('delete-education/{id}' , [EducationController::class , 'delete_education']);
+
+    //Experience
+    Route::get('get-all-experiences' , [ExperienceController::class , 'get_all_experiences']);
 });
 
 
