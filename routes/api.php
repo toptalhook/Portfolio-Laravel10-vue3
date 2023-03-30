@@ -53,6 +53,7 @@ Route::prefix('v1')->group(function (){
 
     //Experience
     Route::get('get-all-experiences' , [ExperienceController::class , 'get_all_experiences']);
+    Route::post('create-experience', [ExperienceController::class , 'create_experience']);
 });
 
 
