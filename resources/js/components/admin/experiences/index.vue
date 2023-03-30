@@ -62,10 +62,10 @@
                             <p>{{ item.period }}</p>
                             <p>{{ item.position }}</p>
                             <div>
-                                <button class="btn-icon success">
+                                <button class="btn-icon success" @click="editModal(item)">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button class="btn-icon danger">
+                                <button class="btn-icon danger" @click="deleteExperience(item.id)">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -78,10 +78,11 @@
                 <div class="modal main__modal " :class="{show : showModal}">
                     <div class="modal__content">
                         <span class="modal__close btn__close--modal" @click="closeModal()">×</span>
-                        <h3 class="modal__title">Add Experience</h3>
+                        <h3 class="modal__title" v-show="editMode === false">Add Experience</h3>
+                        <h3 class="modal__title" v-show="editMode === true">Update Experience</h3>
                         <hr class="modal_line">
                         <br>
-                        <form @submit.prevent="createExperience()">
+                        <form @submit.prevent="editMode ? updateExperience() : createExperience()">
                             <div>
                                 <p>Company</p>
                                 <input type="text" class="input" v-model="form.company"/>
@@ -99,7 +100,8 @@
                                 <button class="btn mr-2 btn__close--modal" @click="closeModal()">
                                     Cancel
                                 </button>
-                                <button class="btn btn-secondary btn__close--modal ">Save</button>
+                                <button class="btn btn-secondary btn__close--modal " v-show="editMode === false">Save</button>
+                                <button class="btn btn-secondary btn__close--modal " v-show="editMode === true">Update</button>
                             </div>
                         </form>
                     </div>
@@ -124,6 +126,7 @@ export default {
         let experiences = ref([])
         const showModal = ref(false)
         const hideModal = ref(true)
+        const editMode = ref(false)
         let form = ref({
             company: '',
             period: '',
@@ -131,22 +134,66 @@ export default {
         })
 
         const openModal = () => {
+            editMode.value = false
             showModal.value = !showModal.value
         }
         const closeModal = () => {
             showModal.value = !hideModal.value
+            form.value = ({})
+        }
+
+        const editModal = (experience) => {
+            editMode.value = true
+            showModal.value = !showModal.value
+            form.value = experience
         }
 
         const createExperience = async () => {
-            await Axios.post('create-experience',form.value).then(res => {
+            await Axios.post('create-experience', form.value).then(res => {
                 getExperiences()
                 closeModal()
                 toast.fire({
                     icon: 'success',
-                    title: 'Experience Created Successfully'
+                    title: 'Experience created Successfully'
                 })
             })
         }
+
+        const updateExperience = async () => {
+          await Axios.post('update-experience/'+form.value.id , form.value).then(res => {
+              getExperiences()
+              closeModal()
+              toast.fire({
+                  icon : 'success',
+                  title : 'Experience updated successfully'
+              })
+          })
+        }
+
+        const deleteExperience = (id) => {
+            Swal.fire({
+                title: 'Are you sure to delete?',
+                text: "you can't go back",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it !'
+            })
+                .then((result) => {
+                    if (result.value) {
+                        Axios.get('delete-experience/' +id).then(()=>{
+                            Swal.fire({
+                                icon : "success",
+                                title : "Deleted",
+                                text : "Experience deleted successfully"
+                            })
+                            getExperiences()
+                        })
+                    }
+                })
+        }
+
         const getExperiences = async () => {
             await Axios.get('get-all-experiences').then(res => {
                 experiences.value = res.data.experiences
@@ -160,10 +207,14 @@ export default {
         return {
             experiences,
             showModal,
+            editMode,
             openModal,
             closeModal,
+            editModal,
             form,
-            createExperience
+            createExperience,
+            updateExperience,
+            deleteExperience
         }
     }
 }

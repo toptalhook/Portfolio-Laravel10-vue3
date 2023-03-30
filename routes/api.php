@@ -54,6 +54,8 @@ Route::prefix('v1')->group(function (){
     //Experience
     Route::get('get-all-experiences' , [ExperienceController::class , 'get_all_experiences']);
     Route::post('create-experience', [ExperienceController::class , 'create_experience']);
+    Route::post('update-experience/{id}' , [ExperienceController::class, 'update_experience']);
+    Route::get('delete-experience/{id}' , [ExperienceController::class , 'delete_experience']);
 });
 
 
