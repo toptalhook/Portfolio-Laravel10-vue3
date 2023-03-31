@@ -30,13 +30,14 @@ class AboutController extends Controller
             $img = Image::make($request->photo)->resize(700,500);
             $image =$upload_path.$about->photo;
             $img->save($upload_path.$name);
-            if (file_exists($image)){
+            if (file_exists($image)) {
                 @unlink($image);
+            }
             }else{
                 $name = $about->photo;
             }
 
-        }
+
 
 
         if ($about->cv != $request->cv){
@@ -48,13 +49,14 @@ class AboutController extends Controller
             $upload_path = public_path(). "/img/upload/";
             $image =$upload_path.$about->cv;
             $img->save($upload_path.$nameCv);
-            if (file_exists($image)){
+            if (file_exists($image)) {
                 @unlink($image);
+            }
             }else{
                 $nameCv = $about->cv;
             }
 
-        }
+
 
         $about->name = $request->name;
         $about->email = $request->email;

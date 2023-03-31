@@ -60,6 +60,7 @@ Route::prefix('v1')->group(function (){
 
     //projects
     Route::get('get-all-projects', [ProjectController::class , 'get_all_project']);
+    Route::post('create-project' , [ProjectController::class , 'create_project']);
 });
 
 

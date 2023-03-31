@@ -14,7 +14,7 @@
                             <h1>Projects </h1>
                         </div>
                         <div class="titlebar_item">
-                            <div class="btn btn__open--modal">
+                            <div class="btn btn__open--modal" @click="newProject">
                                 New Project
                             </div>
                         </div>
@@ -87,15 +87,21 @@
 import Base from "../layouts/base.vue";
 import {onMounted, ref} from "vue";
 import Axios from "../../axios";
+import {useRouter} from "vue-router";
 export default {
     name: "index",
     components : {Base},
 
     setup() {
+        const router = useRouter()
         const projects = ref([])
 
         const myImage = (img) => {
            return "/img/upload/"+img
+        }
+
+        const newProject = () => {
+          router.push('/admin/projects/new')
         }
         const getProjects = async () => {
           await Axios.get('get-all-projects').then(res =>{
@@ -108,7 +114,8 @@ export default {
 
         return{
             projects,
-            myImage
+            myImage,
+            newProject
         }
     }
 }

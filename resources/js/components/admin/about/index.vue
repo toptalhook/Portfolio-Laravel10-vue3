@@ -97,7 +97,7 @@ export default {
             console.log('form', form.value)
         }
         const getPhoto = () => {
-            let photo = "/img/avatar.png"
+            let photo = "/img/upload/avatar.png"
             if (form.value.photo) {
                 if (form.value.photo.indexOf('base64') !== -1) {
                     photo = form.value.photo
