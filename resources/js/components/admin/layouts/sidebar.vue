@@ -67,14 +67,14 @@
                     </router-link>
                 </li>
                 <li class="nav_item">
-                    <a class="nav_link " href="project.html">
+                    <router-link class="nav_link " to="/admin/projects">
                             <span class="nav_link--span--icon">
                                 <i class="fas fa-project-diagram nav__link--icon"></i>
                             </span>
                         <span class="nav_link--span--navname">
                                 Projects
                             </span>
-                    </a>
+                    </router-link>
                 </li>
                 <li class="nav_item">
                     <a class="nav_link " href="#">
