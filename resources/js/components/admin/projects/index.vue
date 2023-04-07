@@ -65,7 +65,7 @@
                             <p>{{item.description}}</p>
                             <p>{{item.link}}</p>
                             <div>
-                                <button class="btn-icon success">
+                                <button class="btn-icon success" @click="onEdit(item.id)">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
                                 <button class="btn-icon danger" >
@@ -103,6 +103,10 @@ export default {
         const newProject = () => {
           router.push('/admin/projects/new')
         }
+        const onEdit = (id) => {
+          router.push('/admin/projects/edit/'+id)
+        }
+
         const getProjects = async () => {
           await Axios.get('get-all-projects').then(res =>{
               projects.value = res.data.projects
@@ -115,7 +119,8 @@ export default {
         return{
             projects,
             myImage,
-            newProject
+            newProject,
+            onEdit
         }
     }
 }

@@ -9,6 +9,7 @@ import adminEducationIndex from  '../components/admin/educations/index.vue'
 import adminExperienceIndex from  '../components/admin/experiences/index.vue'
 import  adminProjectIndex from '../components/admin/projects/index.vue'
 import adminProjectNew from  '../components/admin/projects/new.vue'
+import adminProjectEdit from  '../components/admin/projects/edit.vue'
 
 //pages
 import homePageIndex from '../components/pages/home/index.vue'
@@ -81,6 +82,15 @@ const routes = [
         meta: {
             isAuth: true
         }
+    },
+    {
+        path: '/admin/projects/edit/:id',
+        name: 'adminProjectEdit',
+        component: adminProjectEdit,
+        meta: {
+            isAuth: true
+        },
+        props:true
     },
     // pages
     {
