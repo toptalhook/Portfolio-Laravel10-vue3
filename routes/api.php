@@ -61,6 +61,9 @@ Route::prefix('v1')->group(function (){
     //projects
     Route::get('get-all-projects', [ProjectController::class , 'get_all_project']);
     Route::post('create-project' , [ProjectController::class , 'create_project']);
+    Route::get('get-edit-project/{id}',[ProjectController::class , 'get_edit_project']);
+    Route::post('update-project/{id}',[ProjectController::class , 'update_project']);
+    Route::get('delete-project/{id}' , [ProjectController::class , 'delete_project']);
 });
 
 

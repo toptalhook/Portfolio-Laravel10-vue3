@@ -68,7 +68,7 @@
                                 <button class="btn-icon success" @click="onEdit(item.id)">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button class="btn-icon danger" >
+                                <button class="btn-icon danger" @click="deleteProject(item.id)">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -107,6 +107,30 @@ export default {
           router.push('/admin/projects/edit/'+id)
         }
 
+        const deleteProject = (id) => {
+            Swal.fire({
+                title: 'Are you sure to delete?',
+                text: "you can't go back",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it !'
+            })
+                .then((result) => {
+                    if (result.value) {
+                        Axios.get('delete-project/' +id).then(()=>{
+                            Swal.fire({
+                                icon : "success",
+                                title : "Deleted",
+                                text : "Project deleted successfully"
+                            })
+                            getProjects()
+                        })
+                    }
+                })
+        }
+
         const getProjects = async () => {
           await Axios.get('get-all-projects').then(res =>{
               projects.value = res.data.projects
@@ -120,7 +144,8 @@ export default {
             projects,
             myImage,
             newProject,
-            onEdit
+            onEdit,
+            deleteProject
         }
     }
 }
