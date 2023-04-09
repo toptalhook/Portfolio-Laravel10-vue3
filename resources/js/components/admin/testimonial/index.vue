@@ -12,7 +12,7 @@
                         <div class="titlebar_item">
                             <h1>Testimonials </h1>
                         </div>
-                        <div class="titlebar_item">
+                        <div class="titlebar_item"> 
                             <div class="btn btn__open--modal">
                                 New Testimonial
                             </div>
