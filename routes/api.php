@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\ExperienceController;
 use App\Http\Controllers\Api\V1\ProjectController;
 use App\Http\Controllers\Api\V1\ServiceController;
 use App\Http\Controllers\Api\V1\SkillController;
+use App\Http\Controllers\Api\V1\TestimonialController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -64,6 +65,9 @@ Route::prefix('v1')->group(function (){
     Route::get('get-edit-project/{id}',[ProjectController::class , 'get_edit_project']);
     Route::post('update-project/{id}',[ProjectController::class , 'update_project']);
     Route::get('delete-project/{id}' , [ProjectController::class , 'delete_project']);
+
+    // testimonial
+    Route::get('get-all-testimonial',[TestimonialController::class,'get_all_testimonial']);
 });
 
 
