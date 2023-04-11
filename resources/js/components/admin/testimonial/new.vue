@@ -33,7 +33,7 @@
 
                             </div>
                         </div>
-
+ 
                         <div class="wrapper_right ">
                             <div class="card">
                                 <p>Photo</p>
