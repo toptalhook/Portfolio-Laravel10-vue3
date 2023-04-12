@@ -12,8 +12,13 @@
                         <div class="titlebar_item">
                             <h1>Testimonials </h1>
                         </div>
+<<<<<<< HEAD
                         <div class="titlebar_item">
                             <div class="btn btn__open--modal" @click="newTestimonial">
+=======
+                        <div class="titlebar_item"> 
+                            <div class="btn btn__open--modal">
+>>>>>>> 8fd1f8a9510d6b99f617d6969af1703cf5dfeef4
                                 New Testimonial
                             </div>
                         </div>
