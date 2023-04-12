@@ -13,7 +13,7 @@
                             <h1>Testimonials </h1>
                         </div>
                         <div class="titlebar_item">
-                            <div class="btn btn__open--modal">
+                            <div class="btn btn__open--modal" @click="newTestimonial">
                                 New Testimonial
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                             <p>{{ item.name }}</p>
                             <p>{{ item.function }}</p>
                             <p>{{ item.testimony }}</p>
-                            <p>{{ item.rating }}</p>
+                            <p>{{ item.rating }}/5</p>
                             <div>
                                 <button class="btn-icon success">
                                     <i class="fas fa-pencil-alt"></i>
@@ -87,11 +87,17 @@
 import Base from "../layouts/base.vue";
 import {onMounted, ref} from "vue";
 import Axios from "../../axios";
+import {useRouter} from "vue-router";
 
 let testimonials =ref([])
+const router = useRouter()
 
 const myImage = (img) => {
     return "/img/upload/"+img
+}
+
+const newTestimonial = () => {
+  router.push('/admin/testimonials/new')
 }
 const getTestimonial =async () => {
   await Axios.get('/get-all-testimonial').then(res => {

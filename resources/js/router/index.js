@@ -11,6 +11,7 @@ import  adminProjectIndex from '../components/admin/projects/index.vue'
 import adminProjectNew from  '../components/admin/projects/new.vue'
 import adminProjectEdit from  '../components/admin/projects/edit.vue'
 import adminTestimonialIndex from  '../components/admin/testimonial/index.vue'
+import adminTestimonialNew from  '../components/admin/testimonial/new.vue'
 
 //pages
 import homePageIndex from '../components/pages/home/index.vue'
@@ -97,6 +98,14 @@ const routes = [
         path: '/admin/testimonials',
         name: 'adminTestimonialIndex',
         component: adminTestimonialIndex,
+        meta: {
+            isAuth: true
+        },
+    },
+    {
+        path: '/admin/testimonials/new',
+        name: 'adminTestimonialNew',
+        component: adminTestimonialNew,
         meta: {
             isAuth: true
         },
