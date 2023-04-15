@@ -43,4 +43,14 @@ class TestimonialController extends Controller
         $testimonial->photo = $name;
         $testimonial->save();
     }
+
+    public function get_edit_testimonial($id)
+    {
+        $testimonial = Testimonial::find($id);
+
+        return response()->json([
+            'testimonial'=>$testimonial
+        ]);
+
+    }
 }

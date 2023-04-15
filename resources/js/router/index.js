@@ -12,6 +12,7 @@ import adminProjectNew from  '../components/admin/projects/new.vue'
 import adminProjectEdit from  '../components/admin/projects/edit.vue'
 import adminTestimonialIndex from  '../components/admin/testimonial/index.vue'
 import adminTestimonialNew from  '../components/admin/testimonial/new.vue'
+import adminTestimonialEdit from '../components/admin/testimonial/edit.vue'
 
 //pages
 import homePageIndex from '../components/pages/home/index.vue'
@@ -109,6 +110,15 @@ const routes = [
         meta: {
             isAuth: true
         },
+    },
+    {
+        path: '/admin/testimonials/edit/:id',
+        name: 'adminTestimonialEdit',
+        component: adminTestimonialEdit,
+        meta: {
+            isAuth: true
+        },
+        props: true
     },
     // pages
     {

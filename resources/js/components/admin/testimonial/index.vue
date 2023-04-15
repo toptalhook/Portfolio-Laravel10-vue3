@@ -66,7 +66,7 @@
                             <p>{{ item.testimony }}</p>
                             <p>{{ item.rating }}/5</p>
                             <div>
-                                <button class="btn-icon success">
+                                <button class="btn-icon success" @click="onEdit(item.id)">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
                                 <button class="btn-icon danger" >
@@ -98,6 +98,10 @@ const myImage = (img) => {
 
 const newTestimonial = () => {
     router.push('/admin/testimonials/new')
+}
+
+const onEdit = (id) => {
+    router.push('/admin/testimonials/edit/'+id)
 }
 const getTestimonial = async () => {
     await Axios.get('/get-all-testimonial').then(res => {
