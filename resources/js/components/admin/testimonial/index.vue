@@ -12,13 +12,8 @@
                         <div class="titlebar_item">
                             <h1>Testimonials </h1>
                         </div>
-<<<<<<< HEAD
                         <div class="titlebar_item">
                             <div class="btn btn__open--modal" @click="newTestimonial">
-=======
-                        <div class="titlebar_item"> 
-                            <div class="btn btn__open--modal">
->>>>>>> 8fd1f8a9510d6b99f617d6969af1703cf5dfeef4
                                 New Testimonial
                             </div>
                         </div>
@@ -94,23 +89,23 @@ import {onMounted, ref} from "vue";
 import Axios from "../../axios";
 import {useRouter} from "vue-router";
 
-let testimonials =ref([])
+let testimonials = ref([])
 const router = useRouter()
 
 const myImage = (img) => {
-    return "/img/upload/"+img
+    return "/img/upload/" + img
 }
 
 const newTestimonial = () => {
-  router.push('/admin/testimonials/new')
+    router.push('/admin/testimonials/new')
 }
-const getTestimonial =async () => {
-  await Axios.get('/get-all-testimonial').then(res => {
- testimonials.value = res.data.testimonials
-  })
+const getTestimonial = async () => {
+    await Axios.get('/get-all-testimonial').then(res => {
+        testimonials.value = res.data.testimonials
+    })
 }
 
-onMounted(async() =>{
+onMounted(async () => {
     getTestimonial()
 })
 
