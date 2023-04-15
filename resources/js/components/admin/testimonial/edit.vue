@@ -27,7 +27,7 @@
 
                                 <p>Function</p>
                                 <input type="text" class="input" v-model="form.function" />
-
+ 
                                 <p>Testimony</p>
                                 <textarea cols="10" rows="5" v-model="form.testimony" ></textarea>
 
