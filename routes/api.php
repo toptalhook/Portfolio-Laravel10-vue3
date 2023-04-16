@@ -70,6 +70,7 @@ Route::prefix('v1')->group(function (){
     Route::get('get-all-testimonial',[TestimonialController::class,'get_all_testimonial']);
     Route::post('create-testimonial',[TestimonialController::class , 'create_testimonial']);
     Route::get('get-edit-testimonial/{id}',[TestimonialController::class , 'get_edit_testimonial']);
+    Route::post('update-testimonial/{id}',[TestimonialController::class , 'update_testimonial']);
 });
 
 

@@ -53,7 +53,7 @@
 
                         </div>
                         <div class="titlebar_item">
-                            <div class="btn btn-secondary">
+                            <div class="btn btn-secondary" @click="updateTestimonial()">
                                 Update Testimonial
                             </div>
                         </div>
@@ -68,6 +68,9 @@
 import Base from "../layouts/base.vue";
 import {ref,onMounted} from "vue";
 import Axios from "../../axios";
+import {useRouter} from "vue-router";
+
+const router = useRouter()
 
 
 let form = ref({
@@ -102,6 +105,16 @@ const getPhoto = () => {
         }
     }
     return photo
+}
+
+const updateTestimonial = async () => {
+  await Axios.post(`update-testimonial/${form.value.id}`,form.value).then(res =>{
+      router.push('/admin/testimonials')
+      toast.fire({
+          icon : 'success',
+          title : 'Testimonial updated successfully'
+      })
+  })
 }
 
 const changePhoto = (e) => {
