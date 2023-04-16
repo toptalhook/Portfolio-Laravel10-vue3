@@ -80,4 +80,10 @@ class TestimonialController extends Controller
         $testimonial->photo = $name;
         $testimonial->save();
     }
+
+    public function delete_testimonial($id)
+    {
+        $testimonial = Testimonial::findOrFail($id);
+        $testimonial->delete();
+    }
 }

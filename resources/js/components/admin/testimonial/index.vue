@@ -69,7 +69,7 @@
                                 <button class="btn-icon success" @click="onEdit(item.id)">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button class="btn-icon danger" >
+                                <button class="btn-icon danger" @click="deleteTestimonial(item.id)" >
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -103,14 +103,38 @@ const newTestimonial = () => {
 const onEdit = (id) => {
     router.push('/admin/testimonials/edit/'+id)
 }
-const getTestimonial = async () => {
+
+const deleteTestimonial = (id) => {
+    Swal.fire({
+        title: 'Are you sure to delete?',
+        text: "you can't go back",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it !'
+    })
+        .then((result) => {
+            if (result.value) {
+                Axios.get('delete-testimonial/' +id).then(()=>{
+                    Swal.fire({
+                        icon : "success",
+                        title : "Deleted",
+                        text : "Project deleted successfully"
+                    })
+                    getTestimonials()
+                })
+            }
+        })
+}
+const getTestimonials = async () => {
     await Axios.get('/get-all-testimonial').then(res => {
         testimonials.value = res.data.testimonials
     })
 }
 
 onMounted(async () => {
-    getTestimonial()
+    getTestimonials()
 })
 
 </script>

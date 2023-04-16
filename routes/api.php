@@ -71,6 +71,7 @@ Route::prefix('v1')->group(function (){
     Route::post('create-testimonial',[TestimonialController::class , 'create_testimonial']);
     Route::get('get-edit-testimonial/{id}',[TestimonialController::class , 'get_edit_testimonial']);
     Route::post('update-testimonial/{id}',[TestimonialController::class , 'update_testimonial']);
+    Route::get('delete-testimonial/{id}' , [TestimonialController::class , 'delete_testimonial']);
 });
 
 
