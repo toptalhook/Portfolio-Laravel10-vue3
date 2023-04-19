@@ -41,7 +41,7 @@
                                 <select class="table_search-select" name="" id="">
                                     <option value="">Filter</option>
                                 </select>
-                            </div>
+                            </div> 
                             <div class="relative">
                                 <i class="table_search-input--icon fas fa-search "></i>
                                 <input class="table_search--input" type="text" placeholder="Search Testimonial">
