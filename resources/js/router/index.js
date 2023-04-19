@@ -13,6 +13,7 @@ import adminProjectEdit from  '../components/admin/projects/edit.vue'
 import adminTestimonialIndex from  '../components/admin/testimonial/index.vue'
 import adminTestimonialNew from  '../components/admin/testimonial/new.vue'
 import adminTestimonialEdit from '../components/admin/testimonial/edit.vue'
+import adminMessageIndex from  '../components/admin/messages/index.vue'
 
 //pages
 import homePageIndex from '../components/pages/home/index.vue'
@@ -119,6 +120,14 @@ const routes = [
             isAuth: true
         },
         props: true
+    },
+    {
+        path: '/admin/messages',
+        name: 'adminMessageIndex',
+        component: adminMessageIndex,
+        meta: {
+            isAuth: true
+        }
     },
     // pages
     {

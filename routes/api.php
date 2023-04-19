@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\AboutController;
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\EducationController;
 use App\Http\Controllers\Api\V1\ExperienceController;
+use App\Http\Controllers\Api\V1\MessageController;
 use App\Http\Controllers\Api\V1\ProjectController;
 use App\Http\Controllers\Api\V1\ServiceController;
 use App\Http\Controllers\Api\V1\SkillController;
@@ -66,12 +67,15 @@ Route::prefix('v1')->group(function (){
     Route::post('update-project/{id}',[ProjectController::class , 'update_project']);
     Route::get('delete-project/{id}' , [ProjectController::class , 'delete_project']);
 
-    // testimonial
+    // testimonials
     Route::get('get-all-testimonial',[TestimonialController::class,'get_all_testimonial']);
     Route::post('create-testimonial',[TestimonialController::class , 'create_testimonial']);
     Route::get('get-edit-testimonial/{id}',[TestimonialController::class , 'get_edit_testimonial']);
     Route::post('update-testimonial/{id}',[TestimonialController::class , 'update_testimonial']);
     Route::get('delete-testimonial/{id}' , [TestimonialController::class , 'delete_testimonial']);
+
+    //messages
+    Route::get('get-all-messages',[MessageController::class , 'get_all_messages']);
 });
 
 
