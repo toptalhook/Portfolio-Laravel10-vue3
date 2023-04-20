@@ -30,7 +30,7 @@
                                             All
                                         </p>
                                     </li>
-                                </ul> 
+                                </ul>
                             </div>
                         </div>
 
@@ -69,7 +69,7 @@
                                 </span>
                             </p>
                             <div>
-                                <button class="btn-icon danger" >
+                                <button class="btn-icon danger" @click="deleteMessage(item.id)" >
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -106,6 +106,30 @@ const updateStatus = (id,status) => {
         })
         getMessages()
     })
+}
+
+const deleteMessage = (id) => {
+    Swal.fire({
+        title: 'Are you sure to delete?',
+        text: "you can't go back",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it !'
+    })
+        .then((result) => {
+            if (result.value) {
+                Axios.get('delete-message/' +id).then(()=>{
+                    Swal.fire({
+                        icon : "success",
+                        title : "Deleted",
+                        text : "Message deleted successfully"
+                    })
+                    getMessages()
+                })
+            }
+        })
 }
 
 onMounted(async() =>{
