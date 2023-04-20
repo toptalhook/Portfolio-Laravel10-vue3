@@ -61,10 +61,10 @@
                             <p>{{ item.subject }} </p>
                             <p>{{ item.description }}</p>
                             <p>
-                                <span class="badge_read" v-if="item.status === 1">
+                                <span class="badge_read" @click="updateStatus(item.id,0)" v-if="item.status === 1">
                                     Read
                                 </span>
-                                <span class="badge_unread" v-if="item.status === 0">
+                                <span class="badge_unread" @click="updateStatus(item.id,1)" v-if="item.status === 0">
                                     Unread
                                 </span>
                             </p>
@@ -92,6 +92,20 @@ const getMessages = async () => {
   await Axios.get('get-all-messages').then(res => {
       messages.value = res.data.messages
   })
+}
+
+const updateStatus = (id,status) => {
+
+    const formData = new FormData()
+    formData.append('status',status)
+
+    Axios.post('change-status/'+id,formData).then(res=>{
+        toast.fire({
+            icon:'success',
+            title : 'Status change successfully'
+        })
+        getMessages()
+    })
 }
 
 onMounted(async() =>{

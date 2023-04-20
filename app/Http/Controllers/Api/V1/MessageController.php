@@ -16,4 +16,12 @@ class MessageController extends Controller
            'messages'=>$messages
         ]);
     }
+
+    public function change_status(Request $request ,$id)
+    {
+        $message = Message::find($id);
+        $message->status = $request->status;
+        $message->save();
+        return response()->json($request->status,200);
+    }
 }

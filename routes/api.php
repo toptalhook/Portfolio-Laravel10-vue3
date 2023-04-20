@@ -76,6 +76,7 @@ Route::prefix('v1')->group(function (){
 
     //messages
     Route::get('get-all-messages',[MessageController::class , 'get_all_messages']);
+    Route::post('change-status/{id}',[MessageController::class , 'change_status']);
 });
 
 
