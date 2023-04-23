@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\V1\ProjectController;
 use App\Http\Controllers\Api\V1\ServiceController;
 use App\Http\Controllers\Api\V1\SkillController;
 use App\Http\Controllers\Api\V1\TestimonialController;
+use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -78,6 +79,9 @@ Route::prefix('v1')->group(function (){
     Route::get('get-all-messages',[MessageController::class , 'get_all_messages']);
     Route::post('change-status/{id}',[MessageController::class , 'change_status']);
     Route::get('delete-message/{id}',[MessageController::class,'delete_message']);
+
+    //users
+    Route::get('get-all-users',[UserController::class,'get_all_users']);
 });
 
 
