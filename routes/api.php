@@ -82,6 +82,7 @@ Route::prefix('v1')->group(function (){
 
     //users
     Route::get('get-all-users',[UserController::class,'get_all_users']);
+    Route::post('create-user',[UserController::class , 'create_user']);
 });
 
 

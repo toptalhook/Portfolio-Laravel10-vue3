@@ -13,7 +13,7 @@
                             <h1>Users </h1>
                         </div>
                         <div class="titlebar_item">
-                            <div class="btn btn__open--modal">
+                            <div class="btn btn__open--modal" @click="openModal()">
                                 New User
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                                 <button class="btn-icon success">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button class="btn-icon danger" >
+                                <button class="btn-icon danger">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
                             </div>
@@ -75,8 +75,50 @@
 
                 </div>
             </section>
+            <!-------------- USER MODAL --------------->
+            <div class="modal main__modal " :class="{show : showModal}">
+                <div class="modal__content">
+                    <form @submit.prevent="createUser()">
+                    <span class="modal__close btn__close--modal">×</span>
+                    <h3 class="modal__title">Add User</h3>
+                    <hr class="modal_line">
+                    <br>
+                    <div>
+                        <p>Name</p>
+                        <input type="text" class="input" v-model="form.name"/>
+
+                        <p>Email</p>
+                        <input type="text" class="input" v-model="form.email"/>
+
+                        <p>Bio</p>
+                        <textarea cols="20" rows="3" class="textarea" v-model="form.bio"></textarea>
+
+                        <p>Type</p>
+                        <select class="inputSelect" name="" id="" v-model="form.type">
+                            <option disabled>Select Role</option>
+                            <option value="admin">Admin</option>
+                            <option value="user">Standard User</option>
+                        </select>
+
+                        <p>Password</p>
+                        <input type="password" id="password" class="input" v-model="form.password">
+                    </div>
+                    <br>
+                    <hr class="modal_line">
+                    <div class="model__footer">
+                        <button class="btn mr-2 btn__close--modal" @click="closeModal()">
+                            Cancel
+                        </button>
+                        <button class="btn btn-secondary btn__close--modal ">Save</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
         </div>
+
     </main>
+
+
 </template>
 
 <script setup>
@@ -85,18 +127,48 @@ import {onMounted, ref} from "vue";
 import Axios from "../../axios";
 
 let users = ref([])
-const getUsers =async () => {
-  let response = await Axios.get('get-all-users')
-    users.value =  response.data.users
+const showModal = ref(false)
+const hideModal = ref(true)
+let form = ref({
+    name : '',
+    type: '',
+    bio : '',
+    email : '',
+    password : ''
+})
+
+const openModal = () => {
+    showModal.value = !showModal.value
+}
+const closeModal = () => {
+    showModal.value = !hideModal.value
 }
 
-onMounted(async ()=>{
+const createUser = async () => {
+  await Axios.post('create-user',form.value).then(res =>{
+      getUsers()
+      closeModal()
+      toast.fire({
+          icon : 'success',
+          title : 'User created successfully'
+      })
+  })
+}
+
+const getUsers = async () => {
+    let response = await Axios.get('get-all-users')
+    users.value = response.data.users
+}
+
+onMounted(async () => {
     getUsers()
 })
 
 const ourImage = (img) => {
-  return "/img/upload/"+img
+    return "/img/upload/" + img
 }
+
+
 </script>
 
 <style scoped>
