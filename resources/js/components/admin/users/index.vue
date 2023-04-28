@@ -11,7 +11,7 @@
                     <div class="titlebar">
                         <div class="titlebar_item">
                             <h1>Users </h1>
-                        </div>
+                        </div> 
                         <div class="titlebar_item">
                             <div class="btn btn__open--modal" @click="openModal()">
                                 New User
